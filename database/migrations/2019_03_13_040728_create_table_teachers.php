@@ -36,7 +36,7 @@ class CreateTableTeachers extends Migration
             $table->string('sex')->nullable();
             $table->integer('status')->nullable();
             $table->string('teach_city')->nullable();
-            $table->string('teach_country')->nullable();
+            $table->string('teach_county')->nullable();
             $table->string('teach_exprience')->nullable();
             $table->string('teach_feature')->nullable();
             $table->string('teach_grade')->nullable();

@@ -15,6 +15,6 @@ class Alluser extends Model
 		'nickName',
 		'avatarUrl',
 		'province',
-		'city'
+		'city',
     ];
 }

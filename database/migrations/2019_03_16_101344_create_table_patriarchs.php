@@ -18,7 +18,7 @@ class CreateTablePatriarchs extends Migration
             $table->string('openid');
             $table->string('avatar_url')->nullable();
             $table->string('city')->nullable();
-            $table->string('country')->nullable();
+            $table->string('county')->nullable();
             $table->string('grade')->nullable();
             $table->integer('is_completed')->nullable();
             $table->integer('is_matched')->nullable();
