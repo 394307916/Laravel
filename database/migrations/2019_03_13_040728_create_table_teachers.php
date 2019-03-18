@@ -40,6 +40,7 @@ class CreateTableTeachers extends Migration
             $table->string('teach_feature')->nullable();
             $table->string('teach_grade')->nullable();
             $table->string('teach_review')->nullable();
+            $table->string('teach_schedule')->nullable();
             $table->string('teach_subject')->nullable();
             $table->integer('teacher_auth')->nullable();
             $table->string('tel')->nullable();
