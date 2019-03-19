@@ -18,3 +18,4 @@ Route::post('/login','apiController@getcode');
 Route::get('/showTeachers','TeachersController@showTeachers');
 Route::post('/storeTeacher','TeachersController@storeTeacher');
 Route::post('/myTeacher','TeachersController@myTeacher');
+Route::post('/showTeacherDetail','TeachersController@showTeacherDetail');
