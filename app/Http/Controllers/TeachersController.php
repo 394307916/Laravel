@@ -23,6 +23,7 @@ class TeachersController extends Controller
     $e = explode('，',$da->region);
     $f = explode('，',$da->teach_schedule);
 
+    $da->id = $da->teacher_id;
     $da->teach_feature = $a;
     $da->teach_subject = $b;
     $da->teach_grade = $c;
@@ -52,7 +53,7 @@ public function storeTeacher(Request $request){
   $major = $teacher_da->major;
   $min_wage = intval($teacher_da->min_wage);
   $name = $teacher_da->name;
-  $openid = "oWo705Yx2B4zPMJxAddz7QbNHSHA";
+  $openid = $teacher_da->openid;
   $school = $teacher_da->school;
   $sex = $teacher_da->sex;
   $teach_city = $teacher_da->teach_city;
@@ -214,15 +215,14 @@ public function showTeacherDetail(Request $request){
     $da->region = $e;
     $da->teach_schedule = $f;
 
+    $message = [];
+    $message['data'] = $da;
+    $message['status_code'] = 200;
+    $message['message'] = "";
+
+    return json_encode($message);
+
   }
-
-  $message = [];
-  $message['data'] = $data;
-  $message['status_code'] = 200;
-  $message['message'] = "";
-
-  return json_encode($message);
-
 
 }
 

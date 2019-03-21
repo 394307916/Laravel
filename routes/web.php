@@ -15,7 +15,16 @@
 
 	
 Route::post('/login','apiController@getcode');
+
 Route::get('/showTeachers','TeachersController@showTeachers');
 Route::post('/storeTeacher','TeachersController@storeTeacher');
 Route::post('/myTeacher','TeachersController@myTeacher');
 Route::post('/showTeacherDetail','TeachersController@showTeacherDetail');
+
+Route::post('/video','videoController@video');
+
+Route::get('/showPatriarchs','patriController@showPatriarchs');
+Route::post('/storePatriarch','patriController@storePatriarch');
+Route::post('/showPatriarchDetail','patriController@showPatriarchDetail');
+
+Route::post('/storeNew','newController@storeNew');
