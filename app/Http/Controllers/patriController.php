@@ -79,4 +79,25 @@ class patriController extends Controller
 		return json_encode($return_data);
 	}
 
+	public function showPatriarchDetail(Request $request)
+	{
+		$patriarch_id = $request->input('patriarch_id');
+		$data = Patriarch::find($patriarch_id);
+
+		$a = explode('，',$data->schedule);
+		$b = explode('，',$data->subject);
+
+
+		$data->schedule = $a;
+		$data->subject = $b;
+		$data->id = $data->patriarch_id;
+
+		$message = [];
+		$message['data'] = $data;
+		$message['status_code'] = 200;
+		$message['message'] = "";
+
+		return json_encode($message);
+	}
+
 }

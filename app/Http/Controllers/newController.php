@@ -4,9 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\NewInfo;
+use App\Alluser;
 
 class newController extends Controller
 {
+	public function showNews(Request $request)
+	{
+
+		$data = NewInfo::all();
+    	//$teach_feature = explode(',',$data->teach_feature);
+		echo json_encode($data);
+
+	}
 
 
 	public function storeNew(Request $request)
@@ -30,6 +39,9 @@ class newController extends Controller
 		$newinfo->type_name = $type_name;
 		$newinfo->user_name = $user_name;
 		$newinfo->user_tel = $user_tel;
+
+		$user = Alluser::find($openid);
+    	$newinfo->user_img = $user->avatarUrl;
 
 		$newinfo->save();
 

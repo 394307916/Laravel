@@ -28,3 +28,4 @@ Route::post('/storePatriarch','patriController@storePatriarch');
 Route::post('/showPatriarchDetail','patriController@showPatriarchDetail');
 
 Route::post('/storeNew','newController@storeNew');
+Route::get('/showNews','newController@showNews');
