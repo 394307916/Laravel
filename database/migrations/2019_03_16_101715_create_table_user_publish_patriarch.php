@@ -17,6 +17,8 @@ class CreateTableUserPublishPatriarch extends Migration
             $table->increments('publish_patriarch_id')->index();
             $table->string('openid');
             $table->integer('patriarch_id');
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
 
         });
     }

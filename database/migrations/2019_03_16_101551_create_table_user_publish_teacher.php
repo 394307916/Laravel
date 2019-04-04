@@ -17,6 +17,8 @@ class CreateTableUserPublishTeacher extends Migration
             $table->increments('publish_teacher_id')->index();
             $table->string('openid');
             $table->integer('teacher_id');
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
 
         });
     }

@@ -17,6 +17,8 @@ class CreateTableUserPublishNew extends Migration
             $table->increments('publish_new_id')->index();
             $table->string('openid');
             $table->integer('new_id');
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
 
         });
     }

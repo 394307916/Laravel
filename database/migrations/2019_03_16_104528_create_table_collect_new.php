@@ -17,6 +17,8 @@ class CreateTableCollectNew extends Migration
             $table->increments('collect_teacher_id')->index();
             $table->string('openid');
             $table->integer('new_id');
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 

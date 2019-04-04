@@ -11,9 +11,19 @@ class newController extends Controller
 	public function showNews(Request $request)
 	{
 
-		$data = NewInfo::all();
-    	//$teach_feature = explode(',',$data->teach_feature);
-		echo json_encode($data);
+		if($request->get('openid')){
+			$openid = $request->get('openid');
+			$data = NewInfo::where('openid',$openid)->get();
+
+			$message = [];
+			$message['data'] = $data;
+			return json_encode($message);
+		}else{
+			$data = NewInfo::all();
+
+			echo json_encode($data);
+
+		}
 
 	}
 
@@ -23,7 +33,7 @@ class newController extends Controller
 		$new_data = $request->getContent();
 		$new_da = json_decode($new_data);
 
-		$openid = "oWo705Yx2B4zPMJxAddz7QbNHSHA";
+		$openid = $request->input('openid');
 		$address = $new_da->address;
 		$details = $new_da->details;
 		$type_name = $new_da->type_name;

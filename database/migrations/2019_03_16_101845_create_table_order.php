@@ -18,6 +18,8 @@ class CreateTableOrder extends Migration
             $table->string('openid');
             $table->integer('teacher_id');
             $table->integer('status')->nullable();
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 
