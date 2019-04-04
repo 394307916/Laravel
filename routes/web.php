@@ -29,6 +29,9 @@ Route::post('/storePatriarch','patriController@storePatriarch');
 Route::post('/showPatriarchDetail','patriController@showPatriarchDetail');
 Route::get('/getDeliverCount','patriController@getDeliverCount');
 Route::post('/postDeliver','patriController@postDeliver');
+Route::post('/finishPatriarch','patriController@finishPatriarch');
+Route::post('/whoDeliver','patriController@whoDeliver');
+Route::post('/mySign','patriController@mySign');
 
 Route::post('/storeNew','newController@storeNew');
 Route::get('/showNews','newController@showNews');

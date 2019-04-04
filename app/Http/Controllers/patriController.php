@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Patriarch;
 use App\Sign;
+use App\Teacher;
+use App\Teacher_ex;
 
 class patriController extends Controller
 {
@@ -20,7 +22,7 @@ class patriController extends Controller
 				$a = explode('，',$da->subject);
 				$b = explode('，',$da->schedule);
 
-				$da->id = $da->teacher_id;
+				//$da->id = $da->teacher_id;
 
 				$da->subject = $a;
 				$da->schedule = $b;
@@ -39,7 +41,7 @@ class patriController extends Controller
 				$a = explode('，',$da->subject);
 				$b = explode('，',$da->schedule);
 
-				$da->id = $da->teacher_id;
+				//$da->id = $da->teacher_id;
 
 				$da->subject = $a;
 				$da->schedule = $b;
@@ -93,6 +95,7 @@ class patriController extends Controller
 		$patriarch->tch_require = $tch_require;
 		$patriarch->tch_sex = $tch_sex;
 		$patriarch->resumes_count = 0;
+		$patriarch->is_order = 1;
 
 		$patriarch->save();
 
@@ -180,6 +183,92 @@ class patriController extends Controller
 		}
 
 
+	}
+
+	public function finishPatriarch(Request $request){
+
+		$patriarch_id = $request->input('patriarch_id');
+		$data = Patriarch::find($patriarch_id);
+		$data->is_order = 0;
+		$data->save();
+
+		$message = [];
+
+		$message['status_code'] = 200;
+
+		return json_encode($message);
+
+	}
+
+	public function whoDeliver(Request $request){
+
+
+		$patriarch_id = $request->input('patriarch_id');
+
+		$data = Sign::where('patriarch_id',$patriarch_id)->get();
+
+		$message = [];
+		$i = 0;
+
+		foreach($data as $da){
+    		
+    		$data_t = Teacher::where('openid',$da->openid)->get();
+
+    		foreach($data_t as $da_t){
+
+    			$da_t->teach_exprience = Teacher_ex::where('teacher_id',$da_t->teacher_id)->get();
+    			$a = explode('，',$da_t->teach_feature);
+    			$b = explode('，',$da_t->teach_subject);
+    			$c = explode('，',$da_t->teach_grade);
+    			$d = explode('，',$da_t->teach_county);
+    			$e = explode('，',$da_t->region);
+    			$f = explode('，',$da_t->teach_schedule);
+        //echo json_encode($a,320);
+    			$da_t->teach_feature = $a;
+    			$da_t->teach_subject = $b;
+    			$da_t->teach_grade = $c;
+    			$da_t->teach_county = $d;
+    			$da_t->region = $e;
+    			$da_t->teach_schedule = $f;
+    			$message['data'][$i] = $da_t;
+    			$i = $i + 1;
+
+    		}
+
+		}
+		$message['status_code'] = 200;
+		echo json_encode($message);
+
+	}
+
+	public function mySign(Request $request){
+
+		$openid = $request->input('openid');
+
+		$data = Sign::where('openid',$openid)->get();
+
+		$message = [];
+		$i = 0;
+
+		foreach ($data as $da) {
+			
+			$data_t = Patriarch::find($da->patriarch_id);
+
+			$a = explode('，',$data_t->subject);
+			$b = explode('，',$data_t->schedule);
+
+
+			$data_t->subject = $a;
+			$data_t->schedule = $b;
+			$data_t->id = $data_t->patriarch_id;
+
+			$message['data']['patriarch_list'][$i] = $data_t;
+    		$i = $i + 1;
+
+		}
+
+		$message['status_code'] = 200;
+		echo json_encode($message);
 	}
 
 
