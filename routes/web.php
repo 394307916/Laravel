@@ -21,6 +21,7 @@ Route::post('/storeTeacher','TeachersController@storeTeacher');
 Route::post('/myTeacher','TeachersController@myTeacher');
 Route::post('/showTeacherDetail','TeachersController@showTeacherDetail');
 Route::post('/xiaxianTeacher','TeachersController@xiaxianTeacher');
+Route::post('/pictureTeacher','TeachersController@pictureTeacher');
 
 Route::post('/video','videoController@video');
 
@@ -35,3 +36,9 @@ Route::post('/mySign','patriController@mySign');
 
 Route::post('/storeNew','newController@storeNew');
 Route::get('/showNews','newController@showNews');
+Route::post('/showNewDetail','newController@showNewDetail');
+Route::post('/pictureNew','newController@pictureNew');
+Route::post('/dianzan','newController@dianzan');
+
+
+

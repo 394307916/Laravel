@@ -30,7 +30,11 @@ class CreateTableNews extends Migration
             $table->string('hbfx_num')->nullable();
             $table->string('hong')->nullable();
             $table->string('hot')->nullable();
-            $table->string('img')->nullable();
+            $table->string('img1')->nullable();
+            $table->string('img2')->nullable();
+            $table->string('img3')->nullable();
+            $table->integer('dianzan')->nullable();
+            $table->integer('liulan')->nullable();
             $table->string('money')->nullable();
             $table->string('sh_time')->nullable();
             $table->string('state')->nullable();

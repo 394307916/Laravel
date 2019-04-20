@@ -47,6 +47,9 @@ class CreateTableTeachers extends Migration
             $table->integer('trialclass_used')->nullable();
             $table->string('video')->nullable();
             $table->string('wechat')->nullable();
+            $table->string('img1')->nullable();
+            $table->string('img2')->nullable();
+            $table->string('img3')->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
 
