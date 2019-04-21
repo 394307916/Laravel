@@ -11,12 +11,18 @@ class TeachersController extends Controller
 {
   public function showTeachers(Request $request){
 
-      if($request->get('openid')){
+    if($request->get('openid')){
       $openid = $request->get('openid');
       $data = Teacher::where('openid',$openid)->where('is_online',1)->get();
-      foreach($data as $da){
+
+      $page = $request->get('page');
+      $data = json_decode($data,true);
+      $num = ($page - 1)*5;
+      $data = array_slice($data, $num,5);
+
+      foreach($data as &$da){
         //echo gettype($da->teach_feature);
-        $da->teach_exprience = Teacher_ex::where('teacher_id',$da->teacher_id)->get();
+/*        $da->teach_exprience = Teacher_ex::where('teacher_id',$da->teacher_id)->get();
         $a = explode('，',$da->teach_feature);
         $b = explode('，',$da->teach_subject);
         $c = explode('，',$da->teach_grade);
@@ -29,7 +35,23 @@ class TeachersController extends Controller
         $da->teach_grade = $c;
         $da->teach_county = $d;
         $da->region = $e;
-        $da->teach_schedule = $f;
+        $da->teach_schedule = $f;*/
+        $da['teach_exprience'] = Teacher_ex::where('teacher_id',$da['teacher_id'])->get();
+        $a = explode('，',$da['teach_feature']);
+        $b = explode('，',$da['teach_subject']);
+        $c = explode('，',$da['teach_grade']);
+        $d = explode('，',$da['teach_county']);
+        $e = explode('，',$da['region']);
+        $f = explode('，',$da['teach_schedule']);
+        $da['id'] = $da['teacher_id'];
+        $da['teach_feature'] = $a;
+        $da['teach_subject'] = $b;
+        $da['teach_grade'] = $c;
+        $da['teach_county'] = $d;
+        $da['region'] = $e;
+        $da['teach_schedule'] = $f;
+
+        unset($da);
         //echo json_encode($da->teach_feature);
       }
       $message = [];
@@ -39,12 +61,17 @@ class TeachersController extends Controller
 
       echo json_encode($message);
     }else{
-      $data = Teacher::all()->where('is_online',1);
+      $data = Teacher::where('is_online',1)->orderBy('updated_at','desc')->get();
       //$teach_feature = explode(',',$data->teach_feature);
 
-      foreach($data as $da){
+      $page = $request->get('page');
+      $data = json_decode($data,true);
+      $num = ($page - 1)*5;
+      $data = array_slice($data, $num,5);
+
+      foreach($data as &$da){
         //echo gettype($da->teach_feature);
-        $da->teach_exprience = Teacher_ex::where('teacher_id',$da->teacher_id)->get();
+/*        $da->teach_exprience = Teacher_ex::where('teacher_id',$da->teacher_id)->get();
         $a = explode('，',$da->teach_feature);
         $b = explode('，',$da->teach_subject);
         $c = explode('，',$da->teach_grade);
@@ -58,7 +85,25 @@ class TeachersController extends Controller
         $da->teach_grade = $c;
         $da->teach_county = $d;
         $da->region = $e;
-        $da->teach_schedule = $f;
+        $da->teach_schedule = $f;*/
+
+        $da['teach_exprience'] = Teacher_ex::where('teacher_id',$da['teacher_id'])->get();
+        $a = explode('，',$da['teach_feature']);
+        $b = explode('，',$da['teach_subject']);
+        $c = explode('，',$da['teach_grade']);
+        $d = explode('，',$da['teach_county']);
+        $e = explode('，',$da['region']);
+        $f = explode('，',$da['teach_schedule']);
+        $da['id'] = $da['teacher_id'];
+        $da['teach_feature'] = $a;
+        $da['teach_subject'] = $b;
+        $da['teach_grade'] = $c;
+        $da['teach_county'] = $d;
+        $da['region'] = $e;
+        $da['teach_schedule'] = $f;
+
+        unset($da);
+
       }
 
       $message = [];

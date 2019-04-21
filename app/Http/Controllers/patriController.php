@@ -15,8 +15,13 @@ class patriController extends Controller
 
 		if($request->get('openid')){
 			$openid = $request->get('openid');
-			$data = Patriarch::where('openid',$openid)->get();
-			foreach($data as $da){
+			$data = Patriarch::where('openid',$openid)->orderBy('updated_at','desc')->get();
+
+			$page = $request->get('page');
+			$data = json_decode($data,true);
+			$num = ($page - 1)*5;
+			$data = array_slice($data, $num,5);
+/*			foreach($data as $da){
     		//echo gettype($da->teach_feature);
 
 				$a = explode('，',$da->subject);
@@ -27,25 +32,46 @@ class patriController extends Controller
 				$da->subject = $a;
 				$da->schedule = $b;
 				$da->id = $da->patriarch_id;
+			}*/
+			foreach($data as &$da){
+    		//echo gettype($da->teach_feature);
+
+				$a = explode('，',$da['subject']);
+				$b = explode('，',$da['schedule']);
+
+				//$da->id = $da->teacher_id;
+
+				$da['subject'] = $a;
+				$da['schedule'] = $b;
+				$da['id'] = $da['patriarch_id'];
+
+				unset($da);
 			}
 			$message = [];
 			$message['data'] = $data;
 			return json_encode($message);
 		}else{
-			$data = Patriarch::all();
+			$data = Patriarch::orderBy('updated_at','desc')->get();
     	//$teach_feature = explode(',',$data->teach_feature);
 
-			foreach($data as $da){
+			$page = $request->get('page');
+			$data = json_decode($data,true);
+			$num = ($page - 1)*5;
+			$data = array_slice($data, $num,5);
+
+			foreach($data as &$da){
     		//echo gettype($da->teach_feature);
 
-				$a = explode('，',$da->subject);
-				$b = explode('，',$da->schedule);
+				$a = explode('，',$da['subject']);
+				$b = explode('，',$da['schedule']);
 
 				//$da->id = $da->teacher_id;
 
-				$da->subject = $a;
-				$da->schedule = $b;
-				$da->id = $da->patriarch_id;
+				$da['subject'] = $a;
+				$da['schedule'] = $b;
+				$da['id'] = $da['patriarch_id'];
+
+				unset($da);
 			}
 
 			$message = [];
@@ -105,7 +131,8 @@ class patriController extends Controller
 	}
 
 	public function showPatriarchDetail(Request $request){
-
+		//自己不能投自己
+		//未发布教师不能投
 		$openid = $request->input('openid');
 		$patriarch_id = $request->input('patriarch_id');
 		$data = Patriarch::find($patriarch_id);
@@ -121,13 +148,31 @@ class patriController extends Controller
 		$message = [];
 		$message['data'] = $data;
 
-		$b_patriarch = Sign::where('openid',$openid)->where('patriarch_id',$patriarch_id)->get();
-		$num = count($b_patriarch);
-		if($num == 0){		
+		$if_baomin = Sign::where('openid',$openid)->where('patriarch_id',$patriarch_id)->get();
+		$num1 = count($if_baomin);
+		if($num1 == 0){		
 			$message['isPost'] = 0;
 		}else{		
 			$message['isPost'] = 1;
 		}
+
+		$if_ziji = Patriarch::where('openid',$openid)->where('patriarch_id',$patriarch_id)->get();
+		$num2 = count($if_ziji);
+		if($num2 == 0){		
+			$message['isZiji'] = 0;
+		}else{		
+			$message['isZiji'] = 1;
+		}
+
+		$if_teacher = Teacher::where('openid',$openid)->get();
+		$num3 = count($if_teacher);
+		if($num3 == 0){		
+			$message['isTeacher'] = 0;
+		}else{		
+			$message['isTeacher'] = 1;
+		}
+
+
 		$message['status_code'] = 200;
 		$message['message'] = "";
 
@@ -245,7 +290,7 @@ class patriController extends Controller
 
 		$openid = $request->input('openid');
 
-		$data = Sign::where('openid',$openid)->get();
+		$data = Sign::where('openid',$openid)->orderBy('updated_at','desc')->get();
 
 		$message = [];
 		$i = 0;

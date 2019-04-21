@@ -13,15 +13,18 @@ class newController extends Controller
 		//如果拿到openid 说明是显示用户自己发布的最新消息
 		if($request->get('openid')){
 			$openid = $request->get('openid');
-			$data = NewInfo::where('openid',$openid)->get();
+			$data = NewInfo::where('openid',$openid)->orderBy('updated_at','desc')->get();
 
+			$page = $request->get('page');
+			$num = ($page - 1)*5;
 			$data_array = json_decode($data,true);
+			$data_array = array_slice($data_array, $num,5);
 
-			$data_last = [];
-			$i = 0;
+			//$data_last = [];
+			//$i = 0;
 
 			//往对象里加数组有个坑 必须把对象转数组 然后用新数组才能加
-			foreach ($data_array as $da_array) {
+			foreach ($data_array as &$da_array) {
 				$img1 = $da_array['img1'];
 				$img2 = $da_array['img2'];
 				$img3 = $da_array['img3'];
@@ -30,24 +33,29 @@ class newController extends Controller
 
 				$da_array['imgArray1'] = $imgArray1;
 
-				$data_last[$i] = $da_array;
-				$i++;
+				//$data_last[$i] = $da_array;
+				//$i++;
+				unset($da_array);
 
 			}
 
 			$message = [];
-			$message['data'] = $data_last;
+			$message['data'] = $data_array;
 			return json_encode($message);
 		}else{//要不就是显示所有人的最新消息
-			$data = NewInfo::orderBy('created_at','desc')->get();
+			$page = $request->get('page');
+
+			$data = NewInfo::orderBy('updated_at','desc')->get();
 
 			$data_array = json_decode($data,true);
 
-			$data_last = [];
-			$i = 0;
+			//$data_last = [];
+			//$i = 0;
 
 			//往对象里加数组有个坑 必须把对象转数组 然后用新数组才能加
-			foreach ($data_array as $da_array) {
+			$num = ($page - 1)*5;
+			$data_array = array_slice($data_array, $num,5);
+			foreach ($data_array as &$da_array) {
 				$img1 = $da_array['img1'];
 				$img2 = $da_array['img2'];
 				$img3 = $da_array['img3'];
@@ -56,14 +64,16 @@ class newController extends Controller
 
 				$da_array['imgArray1'] = $imgArray1;
 
-				$data_last[$i] = $da_array;
-				$i++;
+				//$data_last[$i] = $da_array;
+				//$i++;
+
+				unset($da_array);
 
 			}
 
 			//$data_last = (object)$data_array;
-			echo json_encode($data_last);
-
+			echo json_encode($data_array);
+			//echo json_encode($data_array[4]);
 
 
 /*			foreach ($data as $da) {

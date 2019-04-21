@@ -26,10 +26,11 @@ class PayController extends Controller
      *
      * @return Response
      */
-    public function pay()
+    public function pay(Request $request)
     {
+    	$user_openid = $request->input('openid');
 
-        $pay = $this->pay_repository->pay();
+        $pay = $this->pay_repository->pay($user_openid);
 
         return json_encode($pay);
 

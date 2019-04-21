@@ -11,7 +11,7 @@ class PayRepository
      *
      * @return Array
      */
-    public function pay()
+    public function pay($user_openid)
     {
         $this->wxpay = app('easywechat.payment');
 
@@ -20,7 +20,7 @@ class PayRepository
             'out_trade_no' => rand(100000000,999999999),
             'total_fee' => 1,
             'trade_type' => 'JSAPI',
-            'openid' => 'oBHQo4wvcxEDltWdrP0Z7qW8fcF0', // 用户的openid
+            'openid' => $user_openid, // 用户的openid
         ]);
 
         if ($unify['return_code'] === 'SUCCESS' && !isset($unify['err_code'])) {
