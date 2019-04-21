@@ -40,5 +40,7 @@ Route::post('/showNewDetail','newController@showNewDetail');
 Route::post('/pictureNew','newController@pictureNew');
 Route::post('/dianzan','newController@dianzan');
 
+Route::post('/pay','payController@pay');
+
 
 

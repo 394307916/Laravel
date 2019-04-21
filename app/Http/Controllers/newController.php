@@ -15,11 +15,31 @@ class newController extends Controller
 			$openid = $request->get('openid');
 			$data = NewInfo::where('openid',$openid)->get();
 
+			$data_array = json_decode($data,true);
+
+			$data_last = [];
+			$i = 0;
+
+			//往对象里加数组有个坑 必须把对象转数组 然后用新数组才能加
+			foreach ($data_array as $da_array) {
+				$img1 = $da_array['img1'];
+				$img2 = $da_array['img2'];
+				$img3 = $da_array['img3'];
+
+				$imgArray1 = [$img1,$img2,$img3];
+
+				$da_array['imgArray1'] = $imgArray1;
+
+				$data_last[$i] = $da_array;
+				$i++;
+
+			}
+
 			$message = [];
-			$message['data'] = $data;
+			$message['data'] = $data_last;
 			return json_encode($message);
 		}else{//要不就是显示所有人的最新消息
-			$data = NewInfo::all();
+			$data = NewInfo::orderBy('created_at','desc')->get();
 
 			$data_array = json_decode($data,true);
 
@@ -199,12 +219,14 @@ class newController extends Controller
 		$data = NewInfo::find($new_id);
 
 		$data->dianzan = $data->dianzan + 1;
+		$dianzan_data = $data->dianzan;
 
 		$data->save();
 
 		$message = [];
 
 		$message['status_code'] = 200;
+		$message['dianzan'] = $dianzan_data;
 
 		return json_encode($message);
 	}

@@ -90,6 +90,7 @@ class TeachersController extends Controller
     $teach_review = $teacher_da->teach_review;
     $tel = $teacher_da->tel;
     $wechat = $teacher_da->wechat;
+    $video = $teacher_da->video;
     $region = implode('，',$teacher_da->region);
     $teach_county = implode('，',$teacher_da->teach_county);
     $teach_feature = implode('，',$teacher_da->teach_feature);
@@ -98,9 +99,11 @@ class TeachersController extends Controller
     $teach_subject = implode('，',$teacher_da->teach_subject);
 
 
+
+
     $b_teacher = Teacher::where('openid',$openid)->get();
     $num = count($b_teacher);
-    if($num == 0){
+    if($num == 0){//创建新
       $teacher = new Teacher();
       $teacher->openid = $openid;
       $teacher->grade = $grade;
@@ -114,6 +117,25 @@ class TeachersController extends Controller
       $teacher->teach_review = $teach_review;
       $teacher->tel = $tel;
       $teacher->wechat = $wechat;
+      $teacher->video = $video;
+
+      if(count($teacher_da->imgArray1) == 1){
+        $img1 = $$teacher_da->imgArray1[0];
+        $teacher->img1 = $img1;
+      }else if(count($$teacher_da->imgArray1) == 2){
+        $img1 = $teacher_da->imgArray1[0];
+        $img2 = $teacher_da->imgArray1[1];
+        $teacher->img1 = $img1;
+        $teacher->img2 = $img2;
+      }else if(count($teacher_da->imgArray1) == 3){
+        $img1 = $teacher_da->imgArray1[0];
+        $img2 = $teacher_da->imgArray1[1];
+        $img3 = $teacher_da->imgArray1[2];
+        $teacher->img1 = $img1;
+        $teacher->img2 = $img2;
+        $teacher->img3 = $img3;
+      }
+
       $teacher->region = $region;
       $teacher->teach_county = $teach_county;
       $teacher->teach_feature = $teach_feature;
@@ -145,7 +167,7 @@ class TeachersController extends Controller
       $return_data = [];
       $return_data['status_code'] = 200;
       return json_encode($return_data);
-    }else{
+    }else{//修改教师
       $te = Teacher::where('openid',$openid)->get();
 
       foreach ($te as $teacher) {
@@ -160,6 +182,31 @@ class TeachersController extends Controller
         $teacher->teach_review = $teach_review;
         $teacher->tel = $tel;
         $teacher->wechat = $wechat;
+
+        if(count($teacher_da->imgArray1) == 0){
+          $teacher->img1 = null;
+          $teacher->img2 = null;
+          $teacher->img3 = null;
+        }
+
+        if(count($teacher_da->imgArray1) == 1){
+          $img1 = $teacher_da->imgArray1[0];
+          $teacher->img1 = $img1;
+        }else if(count($teacher_da->imgArray1) == 2){
+          $img1 = $teacher_da->imgArray1[0];
+          $img2 = $teacher_da->imgArray1[1];
+          $teacher->img1 = $img1;
+          $teacher->img2 = $img2;
+        }else if(count($teacher_da->imgArray1) == 3){
+          $img1 = $teacher_da->imgArray1[0];
+          $img2 = $teacher_da->imgArray1[1];
+          $img3 = $teacher_da->imgArray1[2];
+          $teacher->img1 = $img1;
+          $teacher->img2 = $img2;
+          $teacher->img3 = $img3;
+        }
+
+        $teacher->video = $video;
         $teacher->region = $region;
         $teacher->teach_county = $teach_county;
         $teacher->teach_feature = $teach_feature;
@@ -220,11 +267,34 @@ class TeachersController extends Controller
       $da->teach_county = $d;
       $da->region = $e;
       $da->teach_schedule = $f;
+
+      $img1 = $da->img1;
+      $img2 = $da->img2;
+      $img3 = $da->img3;
+      $data_array = json_decode($da,true);
+      $imgArray1 = [];
+
+      if($img1){
+        array_push($imgArray1, $img1);
+      }
+
+      if($img2){
+        array_push($imgArray1, $img2);
+      }
+
+      if($img3){
+        array_push($imgArray1, $img3);
+      }
+
+      $data_array['imgArray1'] = $imgArray1;
+
+      echo json_encode($data_array);
+
         //echo json_encode($da->teach_feature);
     }
       //$message = [];
       //$message['data'] = $data
-    return json_encode($data);
+    //return json_encode($data);
   }
 
   public function showTeacherDetail(Request $request){
@@ -282,11 +352,11 @@ class TeachersController extends Controller
       if(!in_array($ext,['jpg','jpeg','gif','png']) ) 
         return response()->json(err('文件类型不是图片'));
             //把临时文件移动到指定的位置，并重命名
-      $path = public_path().DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'wchat_img'.DIRECTORY_SEPARATOR.date('Y').date('m').date('d').DIRECTORY_SEPARATOR;
+      $path = public_path().DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'teacher'.DIRECTORY_SEPARATOR;
       $bool =  $file->move($path,$file_name);
 
       if($bool){
-        $img_path = '/uploads/wchat_img/'.date('Y').date('m').date('d').'/'.$file_name;
+        $img_path = '/uploads/teacher/'.$file_name;
         $data = [
           //'domain_img_path'=>get_domain().$img_path,
           //'img_path'=>$img_path,
