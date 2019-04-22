@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Teacher;
 use App\Teacher_ex;
 use App\Alluser;
+use App\Order;
+use App\CollectTea;
 
 class TeachersController extends Controller
 {
@@ -165,9 +167,9 @@ class TeachersController extends Controller
       $teacher->video = $video;
 
       if(count($teacher_da->imgArray1) == 1){
-        $img1 = $$teacher_da->imgArray1[0];
+        $img1 = $teacher_da->imgArray1[0];
         $teacher->img1 = $img1;
-      }else if(count($$teacher_da->imgArray1) == 2){
+      }else if(count($teacher_da->imgArray1) == 2){
         $img1 = $teacher_da->imgArray1[0];
         $img2 = $teacher_da->imgArray1[1];
         $teacher->img1 = $img1;
@@ -344,6 +346,8 @@ class TeachersController extends Controller
 
   public function showTeacherDetail(Request $request){
     $teacher_id = $request->input('teacher_id');
+    $openid = $request->input('openid');
+
     $data = Teacher::where('teacher_id',$teacher_id)->get();
 
     foreach($data as $da){
@@ -364,6 +368,34 @@ class TeachersController extends Controller
       $da->teach_schedule = $f;
 
       $message = [];
+
+/*      $a = Teacher::where('openid',$openid);
+      echo $openid;*/
+      $is_ziji = Teacher::where('openid',$openid)->where('teacher_id',$teacher_id)->get();
+      $num1 = count($is_ziji);
+      if($num1 == 0){   
+        $message['isZiji'] = 0;
+      }else{    
+        $message['isZiji'] = 1;
+      }
+
+      $is_pay = Order::where('openid',$openid)->where('teacher_id',$teacher_id)->get();
+      $num2 = count($is_pay);
+      if($num2 == 1){    
+        $message['isPay'] = 1;
+      }else{
+        $message['isPay'] = 0;
+      }
+
+      $is_collect = CollectTea::where('openid',$openid)->where('teacher_id',$teacher_id)->get();
+      $num3 = count($is_collect);
+      if($num3 == 1){    
+        $message['isCollect'] = 1;
+      }else{
+        $message['isCollect'] = 0;
+      }
+
+      
       $message['data'] = $da;
       $message['status_code'] = 200;
       $message['message'] = "";

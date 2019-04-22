@@ -41,6 +41,11 @@ Route::post('/pictureNew','newController@pictureNew');
 Route::post('/dianzan','newController@dianzan');
 
 Route::post('/pay','payController@pay');
+Route::post('/successPay','payController@successPay');
+Route::post('/isPay','payController@isPay');
+Route::post('/showOrder','payController@showOrder');
 
+Route::post('/shoucangTeacher','collectController@shoucangTeacher');
+Route::post('/shoucangNew','collectController@shoucangNew');
 
 

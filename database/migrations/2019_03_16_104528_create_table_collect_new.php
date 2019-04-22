@@ -14,7 +14,7 @@ class CreateTableCollectNew extends Migration
     public function up()
     {
         Schema::create('collect_new', function (Blueprint $table) {
-            $table->increments('collect_teacher_id')->index();
+            $table->increments('collect_new_id')->index();
             $table->string('openid');
             $table->integer('new_id');
             $table->timestamp('created_at')->nullable();

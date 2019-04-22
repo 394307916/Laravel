@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\NewInfo;
 use App\Alluser;
+use App\CollectNew;
 
 class newController extends Controller
 {
@@ -157,6 +158,7 @@ class newController extends Controller
 
 	public function showNewDetail(Request $request){
 		$new_id = $request->input('new_id');
+		$openid = $request->input('openid');
 
 		$data = NewInfo::find($new_id);
 
@@ -178,6 +180,15 @@ class newController extends Controller
 			array_push($imgArray1, $img3);
 		}
 
+		$message = [];
+		
+		$is_collect = CollectNew::where('openid',$openid)->where('new_id',$new_id)->get();
+		$num = count($is_collect);
+		if($num == 1){    
+			$message['isCollect'] = 1;
+		}else{
+			$message['isCollect'] = 0;
+		}
 
 		$da = json_decode($data,true);
 		$da['imgArray1'] = $imgArray1;
@@ -185,7 +196,7 @@ class newController extends Controller
 		$data->liulan = $data->liulan + 1;
 		$data->save();
 
-		$message = [];
+		
 		$message['data'] = $da;
 
 		$message['status_code'] = 200;

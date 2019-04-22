@@ -22,10 +22,10 @@ class apiController extends Controller
         $code = $request->input('code');
         $encryptedData = $request->input('encryptedData');
         $iv = $request->input('iv');
-        $appid = "wx527ce41bcf42a458";
-        $secret = "5c31283c18df65581f8bd4df189175be";
-        // $appid = "wx9f60377558861361";
-        // $secret = "373835a56b5911cd620bb788e1291a04";
+/*        $appid = "wx527ce41bcf42a458";
+        $secret = "5c31283c18df65581f8bd4df189175be";*/
+        $appid = "wx9f60377558861361";
+        $secret = "373835a56b5911cd620bb788e1291a04";
         
 /*        $client = new Client();
         $res = $client->request('GET', 'homestead.test/showTeachers');
