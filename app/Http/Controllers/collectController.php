@@ -43,7 +43,7 @@ class collectController extends Controller
 			$collect = CollectTea::where('openid',$openid)->where('teacher_id',$teacher_id)->delete();
 
 
-			$message['status_code'] = 200;
+			$message['status_code'] = 300;
 			$message['message'] = '取消收藏';
 			return json_encode($message);
 
@@ -77,7 +77,7 @@ class collectController extends Controller
 
 			$collect = CollectNew::where('openid',$openid)->where('new_id',$new_id)->delete();
 
-			$message['status_code'] = 200;
+			$message['status_code'] = 300;
 			$message['message'] = '取消收藏';
 			return json_encode($message);
 
@@ -88,13 +88,93 @@ class collectController extends Controller
 
     	$openid = $request->get('openid');
 
-    	
+    	$is_collect = CollectNew::where('openid',$openid)->get();
+
+    	$num = count($is_collect);
+
+    	$message = [];
+		$message['data'] = [];
+
+    	foreach ($is_collect as $da) {
+    		$new_id = $da->new_id;
+
+    		if($num != 0){
+
+				$data = NewInfo::where('new_id',$new_id)->get();
+
+			//return json_encode($data);
+				$data = json_decode($data,true);
+
+				foreach($data as &$da){	
+
+					$img1 = $da['img1'];
+					$img2 = $da['img2'];
+					$img3 = $da['img3'];
+
+					$imgArray1 = [$img1,$img2,$img3];
+
+					$da['imgArray1'] = $imgArray1;
+
+					array_push($message['data'], $da);
+
+					unset($da);
+
+				}
+
+			}
+    	}
+
+    	$message['status_code'] = 200;
+		echo json_encode($message);
 
     }
 
     public function showCollectTeacher(Request $request){
     	
     	$openid = $request->get('openid');
+
+    	$is_collect = CollectTea::where('openid',$openid)->get();
+
+    	$num = count($is_collect);
+
+    	$message = [];
+		$message['data'] = [];
+
+    	foreach ($is_collect as $da) {
+    		$teacher_id = $da->teacher_id;
+
+    		if($num != 0){
+
+				$data = Teacher::where('teacher_id',$teacher_id)->get();
+
+			//return json_encode($data);
+				$data = json_decode($data,true);
+
+				foreach($data as $da){
+
+					$da['teach_exprience'] = Teacher_ex::where('teacher_id',$da['teacher_id'])->get();
+					$a = explode('，',$da['teach_feature']);
+					$b = explode('，',$da['teach_subject']);
+					$c = explode('，',$da['teach_grade']);
+					$d = explode('，',$da['teach_county']);
+					$e = explode('，',$da['region']);
+					$f = explode('，',$da['teach_schedule']);
+        //echo json_encode($a,320);
+					$da['teach_feature'] = $a;
+					$da['teach_subject'] = $b;
+					$da['teach_grade'] = $c;
+					$da['teach_county'] = $d;
+					$da['region'] = $e;
+					$da['teach_schedule'] = $f;
+					array_push($message['data'], $da);
+
+				}
+
+			}
+    	}
+
+    	$message['status_code'] = 200;
+		echo json_encode($message);
 
 
     }

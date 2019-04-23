@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\NewInfo;
 use App\Alluser;
 use App\CollectNew;
+use App\Review;
 
 class newController extends Controller
 {
@@ -64,9 +65,6 @@ class newController extends Controller
 				$imgArray1 = [$img1,$img2,$img3];
 
 				$da_array['imgArray1'] = $imgArray1;
-
-				//$data_last[$i] = $da_array;
-				//$i++;
 
 				unset($da_array);
 
@@ -181,13 +179,22 @@ class newController extends Controller
 		}
 
 		$message = [];
-		
+
 		$is_collect = CollectNew::where('openid',$openid)->where('new_id',$new_id)->get();
 		$num = count($is_collect);
-		if($num == 1){    
+		if($num != 0){    
 			$message['isCollect'] = 1;
 		}else{
 			$message['isCollect'] = 0;
+		}
+
+		$is_review = Review::where('new_id',$new_id)->get();
+		$num = count($is_review);
+		if($num != 0){    
+			$message['isReview'] = 1;
+			$message['review'] = $is_review;
+		}else{
+			$message['isReview'] = 0;
 		}
 
 		$da = json_decode($data,true);

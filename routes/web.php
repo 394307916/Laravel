@@ -47,5 +47,13 @@ Route::post('/showOrder','payController@showOrder');
 
 Route::post('/shoucangTeacher','collectController@shoucangTeacher');
 Route::post('/shoucangNew','collectController@shoucangNew');
+Route::post('/showCollectTeacher','collectController@showCollectTeacher');
+Route::post('/showCollectNew','collectController@showCollectNew');
 
+Route::post('/getReview','reviewController@getReview');
+Route::post('/messageReview','reviewController@messageReview');
+Route::post('/hasNewReview','reviewController@hasNewReview');
+
+Route::post('/getAdImg','adverController@getAdImg');
+Route::post('/getAdText','adverController@getAdText');
 
