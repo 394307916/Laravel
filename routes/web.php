@@ -56,4 +56,8 @@ Route::post('/hasNewReview','reviewController@hasNewReview');
 
 Route::post('/getAdImg','adverController@getAdImg');
 Route::post('/getAdText','adverController@getAdText');
+Route::get('/showAdImg','adverController@showAdImg');
+Route::get('/showAdText','adverController@showAdText');
+
+Route::post('/searchTeacher','searchController@searchTeacher');
 

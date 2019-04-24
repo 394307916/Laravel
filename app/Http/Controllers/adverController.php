@@ -34,5 +34,25 @@ class adverController extends Controller
     	return json_encode("okokok");
     }
 
-    
+    public function showAdImg(){
+
+    	$ad_img = Ad_img::all();
+
+    	$message = [];
+    	$message['data'] = $ad_img;
+
+    	return json_encode($message);
+
+    }
+
+    public function showAdText(){
+
+    	$ad_text = Ad_text::all();
+
+    	$message = [];
+    	$message['data'] = $ad_text;
+
+    	return json_encode($message);
+    	
+    }
 }

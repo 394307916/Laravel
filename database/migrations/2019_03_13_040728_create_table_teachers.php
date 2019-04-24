@@ -50,6 +50,7 @@ class CreateTableTeachers extends Migration
             $table->string('img1')->nullable();
             $table->string('img2')->nullable();
             $table->string('img3')->nullable();
+            $table->string('vid')->nullable();
             $table->integer('vertify')->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
