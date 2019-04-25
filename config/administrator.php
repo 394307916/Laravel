@@ -72,6 +72,7 @@ return array(
         '订单' => [
             'order',
             'sign',
+            'payMoney',
         ],
 
     ],

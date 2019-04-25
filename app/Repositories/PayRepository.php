@@ -11,14 +11,14 @@ class PayRepository
      *
      * @return Array
      */
-    public function pay($user_openid)
+    public function pay($user_openid,$money)
     {
         $this->wxpay = app('easywechat.payment');
 
         $unify = $this->wxpay->order->unify([
             'body' => '给钱',
             'out_trade_no' => rand(100000000,999999999),
-            'total_fee' => 1,
+            'total_fee' => $money,
             'trade_type' => 'JSAPI',
             'openid' => $user_openid, // 用户的openid
         ]);

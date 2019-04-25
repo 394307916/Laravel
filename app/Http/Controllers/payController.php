@@ -10,6 +10,7 @@ use App\Teacher;
 use App\Teacher_ex;
 use App\Alluser;
 use App\Order;
+use App\payMoney;
 
 class PayController extends Controller
 {
@@ -34,7 +35,10 @@ class PayController extends Controller
     {
     	$user_openid = $request->input('openid');
 
-        $pay = $this->pay_repository->pay($user_openid);
+    	$data = payMoney::find(1);
+    	$money = $data->money;
+
+        $pay = $this->pay_repository->pay($user_openid,$money);
 
         return json_encode($pay);
 
