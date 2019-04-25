@@ -19,7 +19,7 @@ return [
         // 列的标示，这是一个最小化『列』信息配置的例子，读取的是模型里对应
         // 的属性的值，如 $model->id
         'patriarch_id'=>[
-            'title' => 'patriarch_id',
+            'title' => '家长id',
         ],
         'is_order' => [
             // 数据表格里列的名称，默认会使用『列标识』

@@ -61,6 +61,7 @@ return array(
     'menu' => [
         '用户' => [
             'teachers',
+            'teachers_img',
             'patriarchs',
             'news',
         ],
@@ -68,6 +69,11 @@ return array(
             'ad_img',
             'ad_text',
         ],
+        '订单' => [
+            'order',
+            'sign',
+        ],
+
     ],
 
     /*

@@ -19,7 +19,7 @@ return [
         // 列的标示，这是一个最小化『列』信息配置的例子，读取的是模型里对应
         // 的属性的值，如 $model->id
         'new_id'=>[
-            'title' => 'new_id',
+            'title' => '消息id',
         ],
         'dianzan' => [
             'title'  => '点赞数',
@@ -43,14 +43,13 @@ return [
     ],
     // 『模型表单』设置项
     'edit_fields' => [
-        
+
         'dianzan' => [
             'title'  => '点赞数',
 
         ],
         'liulan' => [
             'title' => '浏览数',
-            'sortable' => false,
         ],
     ],
     // 『数据过滤』设置
@@ -61,7 +60,6 @@ return [
         ],
         'liulan' => [
             'title' => '浏览数',
-            'sortable' => false,
         ],
     ],
 ];

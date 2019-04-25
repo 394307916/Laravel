@@ -19,7 +19,13 @@ return [
         // 列的标示，这是一个最小化『列』信息配置的例子，读取的是模型里对应
         // 的属性的值，如 $model->id
         'ad_img_id'=>[
-            'title' => 'id',
+            'title' => '广告图片id',
+        ],
+        'img' => [
+            'title' => '图片链接',
+            'output' => function ($img){
+                return '<a href="'.$img.'" target="_blank">'.$img.'</a>';
+            }
         ],
         'created_at' => [
             'title' => '创建时间',
