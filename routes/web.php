@@ -61,8 +61,8 @@ Route::get('/showAdText','adverController@showAdText');
 
 Route::post('/searchTeacher','searchController@searchTeacher');
 
-Route::get('xlogin','SessionsController@create')->name('xlogin');
-Route::post('xlogin','SessionsController@store')->name('xlogin');
+Route::get('xlogin','SessionsController@create')->name('login');
+Route::post('xlogin','SessionsController@store')->name('login');
 Route::get('myadmin','SessionsController@home')->name('myadmin');
 Route::delete('logout','SessionsController@destroy')->name('logout');
 

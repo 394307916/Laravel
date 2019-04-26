@@ -10,7 +10,7 @@
     <div class="panel-body">
       @include('shared._errors')
 
-      <form method="POST" action="{{ route('xlogin') }}">
+      <form method="POST" action="{{ route('login') }}">
           {{ csrf_field() }}
 
           <div class="form-group">
