@@ -53,6 +53,7 @@ class adverController extends Controller
     	$message['data'] = $ad_text;
 
     	return json_encode($message);
+    	//echo bcrypt('qweasdzxc');
     	
     }
 }

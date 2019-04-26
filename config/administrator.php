@@ -84,8 +84,8 @@ return array(
      * @type closure
      */
     'permission' => function () {
-        //return Auth::check();
-        return true;
+        return Auth::check();
+        //return true;
     },
 
     /*
@@ -122,7 +122,7 @@ return array(
      *
      * @type string
      */
-    'login_path' => 'login_admin',
+    'login_path' => 'xlogin',
 
     /*
      * The logout path is the path where Administrator will send the user when they click the logout link

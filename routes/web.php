@@ -14,7 +14,7 @@
 
 
 	
-Route::post('/login','apiController@getcode');
+//Route::post('/login','apiController@getcode');
 
 Route::get('/showTeachers','TeachersController@showTeachers');
 Route::post('/storeTeacher','TeachersController@storeTeacher');
@@ -60,4 +60,9 @@ Route::get('/showAdImg','adverController@showAdImg');
 Route::get('/showAdText','adverController@showAdText');
 
 Route::post('/searchTeacher','searchController@searchTeacher');
+
+Route::get('xlogin','SessionsController@create')->name('xlogin');
+Route::post('xlogin','SessionsController@store')->name('xlogin');
+Route::get('myadmin','SessionsController@home')->name('myadmin');
+Route::delete('logout','SessionsController@destroy')->name('logout');
 
