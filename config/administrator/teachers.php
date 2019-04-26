@@ -28,6 +28,9 @@ return [
             'title' => '上下线教师',
             'sortable' => false,
         ],
+        'min_wage' => [
+            'title' => '教师薪酬',
+        ],
         'vid' => [
             'title' => '视频vid',
             'sortable' => false,
@@ -56,12 +59,18 @@ return [
         'vid' => [
             'title' => '视频vid',
         ],
+        'min_wage' => [
+            'title' => '教师薪酬',
+        ],
     ],
     // 『数据过滤』设置
     'filters' => [
         'teacher_id' => [
             // 过滤表单条目显示名称
             'title' => 'teacher_id',
+        ],
+        'min_wage' => [
+            'title' => '教师薪酬',
         ],
     ],
 ];
