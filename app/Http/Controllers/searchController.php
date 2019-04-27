@@ -38,22 +38,29 @@ class searchController extends Controller
 
 		$result = json_decode($result,true);
 
+		$flag = 0;
+
 		foreach ($result as &$teacher) {
 			foreach ($teach_subject as $subject) {
 				if(strpos($teacher['teach_subject'],$subject) === false){
 					$teacher = '';
+					$flag++;
 					break;
 				}
 			}
 		}
 
-		for($n = 0;$n < count($result);$n++){
+		for($i = 0;$i <= $flag;$i++){
+			for($n = 0;$n < count($result);$n++){
 
 			if($result[$n] == ''){
-				array_splice($result, $n, 1); 
+				array_splice($result, $n, 1);
+				break; 
 			}
 
+			}
 		}
+		
 
 		//echo json_encode($result);
 			
