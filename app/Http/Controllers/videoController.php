@@ -29,4 +29,10 @@ class videoController extends Controller
 		echo $signature;
 		echo "\n";
 	}
+
+	public function yulezixun(){
+
+		echo json_encode(0);
+
+	}
 }

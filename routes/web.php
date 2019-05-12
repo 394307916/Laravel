@@ -24,6 +24,7 @@ Route::post('/xiaxianTeacher','TeachersController@xiaxianTeacher');
 Route::post('/pictureTeacher','TeachersController@pictureTeacher');
 //视频相关api
 Route::post('/video','videoController@video');
+Route::get('/yulezixun','videoController@yulezixun');
 //家长相关api
 Route::get('/showPatriarchs','patriController@showPatriarchs');
 Route::post('/storePatriarch','patriController@storePatriarch');
