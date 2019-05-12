@@ -32,7 +32,7 @@ class videoController extends Controller
 
 	public function yulezixun(){
 
-		echo json_encode(0);
+		echo json_encode(1);
 
 	}
 }
