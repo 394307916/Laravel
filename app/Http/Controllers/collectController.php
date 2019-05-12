@@ -88,7 +88,7 @@ class collectController extends Controller
 
     	$openid = $request->get('openid');
 
-    	$is_collect = CollectNew::where('openid',$openid)->get();
+    	$is_collect = CollectNew::where('openid',$openid)->orderBy('updated_at','desc')->get();
 
     	$num = count($is_collect);
 
@@ -133,7 +133,7 @@ class collectController extends Controller
     	
     	$openid = $request->get('openid');
 
-    	$is_collect = CollectTea::where('openid',$openid)->get();
+    	$is_collect = CollectTea::where('openid',$openid)->orderBy('updated_at','desc')->get();
 
     	$num = count($is_collect);
 
